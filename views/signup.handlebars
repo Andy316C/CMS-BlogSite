@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/signup.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="signup-container">
+          <h2>Sign Up Form</h2>
+          <form class="signup">
+            <div class="form-group">
+              <label for="username-input">Username</label>
+              <input
+                type="text"
+                class="form-control"
+                id="username-input"
+                placeholder="Username"
+              />
+            </div>
+            <div class="form-group">
+              <label for="email-input">Email address</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email-input"
+                placeholder="Email"
+              />
+            </div>
+            <div class="form-group">
+              <label for="password-input">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password-input"
+                placeholder="Password"
+              />
+            </div>
+            <div class="form-group">
+              <label for="confirm-password-input">Confirm Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="confirm-password-input"
+                placeholder="Confirm Password"
+              />
+            </div>
+            <div style="display: none;" id="alert" class="alert alert-danger" role="alert">
+              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+              <span class="sr-only">Error:</span>
+              <span class="msg"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+          </form>
+          <br />
+          <p>Or log in <a href="/login">here</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+<!-- Include the following script to handle the form submission and validation -->
+<script>
+  // Add an event listener to the form submission
+  document.querySelector('.signup').addEventListener('submit', async function (event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Get the input values
+    const username = document.getElementById('username-input').value;
+    const email = document.getElementById('email-input').value;
+    const password = document.getElementById('password-input').value;
+    const confirmPassword = document.getElementById('confirm-password-input').value;
+
+    // Perform frontend validation
+    if (username.trim() === '') {
+      const errorMessage = "Username is required.";
+      displayErrorMessage(errorMessage);
+      return;
+    }
+
+    if (email.trim() === '') {
+      const errorMessage = "Email is required.";
+      displayErrorMessage(errorMessage);
+      return;
+    }
+
+    if (password.trim() === '') {
+      const errorMessage = "Password is required.";
+      displayErrorMessage(errorMessage);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      const errorMessage = "Passwords do not match.";
+      displayErrorMessage(errorMessage);
+      return;
+    }
+
+    if (password.length < 6) {
+      const errorMessage = "Password must be at least 6 characters";
+      displayErrorMessage(errorMessage);
+      return;
+    }
+
+    // Send an AJAX request to the signup route
+    try {
+      const response = await fetch('/api/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      if (response.ok) {
+        // Redirect the user to a logged-in page or perform any necessary actions
+        window.location.href = '/';
+      } else {
+        const errorMessage = await response.json();
+        displayErrorMessage(errorMessage.message); // Display the error message
+        console.log(errorMessage.message); // Display the error message
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  // Function to display the error message
+  function displayErrorMessage(message) {
+    const alertElement = document.getElementById('alert');
+    const messageElement = alertElement.querySelector('.msg');
+    messageElement.textContent = message;
+    alertElement.style.display = 'block';
+  }
+</script>

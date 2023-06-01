@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+   <link rel="stylesheet" href="css/login.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="login-container">
+          <h2>Login Form</h2>
+          <form class="login">
+            <div class="form-group">
+              <label for="email-input">Email address</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email-input"
+                placeholder="Email"
+              />
+            </div>
+            <div class="form-group">
+              <label for="password-input">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password-input"
+                placeholder="Password"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+          </form>
+          <br />
+          <p>Or sign up <a href="/sign-up">here</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
+<!-- Include the following script to handle the form submission -->
+<script>
+  // Add an event listener to the form submission
+  document.querySelector('.login').addEventListener('submit', async function (event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Get the input values
+    const email = document.getElementById('email-input').value;
+    const password = document.getElementById('password-input').value;
+
+    // Send an AJAX request to the login route
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        // Redirect the user to a logged-in page or perform any necessary actions
+        window.location.href = '/';
+      } else {
+        const errorMessage = await response.json();
+        alert(errorMessage.message); // Display the error message
+        console.log(errorMessage.message); // Display the error message
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+</script>
