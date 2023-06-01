@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS blog_cms;
+
+CREATE DATABASE blog_cms;
