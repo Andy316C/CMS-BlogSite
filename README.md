@@ -112,7 +112,7 @@ You will need to sign in to view the Blogs, after signing in or signing up and c
 
 Click below for the video:
 
-<a href= "">Blog Site </a>
+<a href= "https://bloggerblogscms.herokuapp.com/">Blog Site </a>
 
    </div>
 
