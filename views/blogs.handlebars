@@ -1,4 +1,4 @@
-<div class="text-center">
+{{!-- <div class="text-center">
   <h2>{{name}}</h2>
   <p>{{{get_emoji}}}</p>
   <p>{{description}}</p>
@@ -11,4 +11,83 @@
   <p>
     <button class="btn btn-primary">Edit blog!</button>
   </p>
-</div>
+</div> --}}
+<style>
+  .container {
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 65vh;
+  }
+
+  .container h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .card-body {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-body p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+  }
+
+  form {
+    margin-top: 20px;
+  }
+
+  input[type="hidden"] {
+    display: none;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+</style>
+
+<section class="container">
+  <h3>ABOUT THE BLOG</h3>
+  <section class="flex-row justify-center">
+    <div class="card-body">
+      <p><strong>{{blog.name}}</strong></p>
+      <p><em>{{user.username}}</em></p>
+      <p>{{blog.date_created}}</p>
+     
+      
+      <p>{{blog.description}}</p>
+      <form action="/editcomment/{{blog.id}}" method="POST">
+        <input type="hidden" name="id" value="{{blog.id}}">
+        <input type="text" name="comment" value="{{blog.comment}}">
+        <button type="submit" id="submitBtn" onClick="myFunction()">leave a comment</button>
+      </form>
+    </div>
+  </section>
+</section>
+<script src="/js/blogs.js"></script>
