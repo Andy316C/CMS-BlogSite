@@ -108,9 +108,9 @@ You will need to sign in to view the Blogs, after signing in or signing up and c
    <div id='VideoLink'>
 <br>
 
-## Screencastify video link
+## Heroku Page
 
-Click below for the video:
+Click below to visit the Application:
 
 <a href= "https://bloggerblogscms.herokuapp.com/">Blog Site </a>
 
